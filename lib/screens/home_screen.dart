@@ -5,6 +5,8 @@ import 'package:app_rental_oto/widgets/recent_orders.dart';
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 
+import 'cart_screen.dart';
+
 class HomeScreen extends StatefulWidget {
   @override
   _HomeScreenState createState() => _HomeScreenState();
@@ -135,12 +137,17 @@ class _HomeScreenState extends State<HomeScreen> {
                     position: BadgePosition(start: 30.0, bottom: 30.0),
                     child: IconButton(
                       icon: Icon(Icons.shopping_cart),
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.push(
+                            context, MaterialPageRoute(builder: (_) => CartScreen()));
+                      },
                     ),
                   )
                 : IconButton(
                     icon: Icon(Icons.shopping_cart),
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (_) => CartScreen()));
+                    },
                   ),
           ),
         ],
