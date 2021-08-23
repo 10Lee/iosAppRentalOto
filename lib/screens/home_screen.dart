@@ -44,13 +44,16 @@ class _HomeScreenState extends State<HomeScreen> {
                     topLeft: Radius.circular(15.0),
                     bottomLeft: Radius.circular(15.0),
                   ),
-                  child: Image(
-                    image: AssetImage(
-                      element.imageUrl,
+                  child: Hero(
+                    tag: element.imageUrl,
+                    child: Image(
+                      image: AssetImage(
+                        element.imageUrl,
+                      ),
+                      height: 150.0,
+                      width: 150.0,
+                      fit: BoxFit.cover,
                     ),
-                    height: 150.0,
-                    width: 150.0,
-                    fit: BoxFit.cover,
                   ),
                 ),
                 Expanded(
