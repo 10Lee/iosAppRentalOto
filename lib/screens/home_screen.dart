@@ -106,22 +106,21 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       backgroundColor: Color(0xFFEBEBEB),
       appBar: AppBar(
-        title: Row(
-          children: [
-            CircleAvatar(
-              radius: 18,
-              backgroundImage: AssetImage(currentUser.imageUrl),
+        leading: Container(
+          margin: EdgeInsets.all(10.0),
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage(currentUser.imageUrl),
+              fit: BoxFit.cover,
             ),
-            Container(
-              margin: EdgeInsets.only(left: 23.0),
-              child: Text(
-                'Bursa Rental Oto',
-                style: TextStyle(
-                  letterSpacing: 1.2,
-                ),
-              ),
-            ),
-          ],
+            borderRadius: BorderRadius.circular(30.0),
+          ),
+        ),
+        title: Text(
+          'Bursa Rental Oto',
+          style: TextStyle(
+            letterSpacing: 1.2,
+          ),
         ),
         actions: [
           Padding(
