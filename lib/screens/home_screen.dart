@@ -153,6 +153,7 @@ class _HomeScreenState extends State<HomeScreen> {
         ],
       ),
       body: ListView(
+        physics: BouncingScrollPhysics(),
         children: [
           Padding(
             padding: EdgeInsets.all(20.0),

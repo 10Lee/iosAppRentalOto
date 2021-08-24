@@ -1,6 +1,7 @@
 import 'package:app_rental_oto/data/data.dart';
 import 'package:app_rental_oto/models/pesanan.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class CartScreen extends StatefulWidget {
   @override
@@ -10,6 +11,13 @@ class CartScreen extends StatefulWidget {
 class _CartScreenState extends State<CartScreen> {
   @override
   Widget build(BuildContext context) {
+    var f = NumberFormat('###,###', 'en_US');
+
+    int totalPrice = 0;
+    currentUser.keranjang.forEach((element) {
+      totalPrice += element.quantitas + element.kendaraan.hargaSewa;
+    });
+
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -24,9 +32,54 @@ class _CartScreenState extends State<CartScreen> {
         title: Text('Keranjang'),
       ),
       body: ListView.separated(
+        physics: BouncingScrollPhysics(),
         itemBuilder: (BuildContext context, int index) {
-          Pesanan pesanan = currentUser.keranjang[index];
-          return _buildKeranjang(pesanan);
+          if (index < currentUser.keranjang.length) {
+            Pesanan pesanan = currentUser.keranjang[index];
+
+            return _buildKeranjang(pesanan);
+          }
+          return Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'Lama Waktu Pengantaran',
+                      style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.w600),
+                    ),
+                    Text(
+                      '12 Menit',
+                      style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.w600),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 20.0,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'Total Biaya Sewa',
+                      style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.w600),
+                    ),
+                    Text(
+                      // 'Rp. ${totalPrice.toString()}K',
+                      'Rp. ' + f.format(totalPrice) + 'K', // Using Package intl
+                      style: TextStyle(
+                          fontSize: 20.0, fontWeight: FontWeight.bold, color: Colors.green),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 150.0,
+                ),
+              ],
+            ),
+          );
         },
         separatorBuilder: (BuildContext context, int index) {
           return Divider(
@@ -34,12 +87,41 @@ class _CartScreenState extends State<CartScreen> {
             color: Colors.grey,
           );
         },
-        itemCount: currentUser.keranjang.length,
+        itemCount: currentUser.keranjang.length + 1,
+      ),
+      bottomSheet: Container(
+        height: 100.0,
+        width: MediaQuery.of(context).size.width,
+        decoration: BoxDecoration(
+          color: Theme.of(context).primaryColor,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black26,
+              offset: Offset(0, -1),
+              blurRadius: 6.0,
+            ),
+          ],
+        ),
+        child: Center(
+          child: TextButton(
+            onPressed: () {},
+            child: Text(
+              'Bayar Sekarang',
+              style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 25.0,
+                  fontWeight: FontWeight.bold,
+                  letterSpacing: 1.1),
+            ),
+          ),
+        ),
       ),
     );
   }
 
   _buildKeranjang(Pesanan pesanan) {
+    int pesananQuantitas = pesanan.quantitas;
+
     return Container(
       padding: EdgeInsets.all(20.0),
       child: Column(
@@ -83,30 +165,39 @@ class _CartScreenState extends State<CartScreen> {
                                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                   children: [
                                     GestureDetector(
-                                      onTap: () {},
+                                      onTap: () {
+                                        pesananQuantitas--;
+                                        print(pesananQuantitas);
+                                      },
                                       child: Text(
                                         '-',
                                         style: TextStyle(
-                                            fontSize: 16.0,
-                                            fontWeight: FontWeight.bold,
-                                            color: Theme.of(context).primaryColor),
+                                          fontSize: 16.0,
+                                          fontWeight: FontWeight.bold,
+                                          color: Theme.of(context).primaryColor,
+                                        ),
                                       ),
                                     ),
                                     Text(
-                                      pesanan.quantitas.toString(),
+                                      pesananQuantitas.toString(),
                                       style: TextStyle(
-                                          fontSize: 15.0,
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.black),
+                                        fontSize: 15.0,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.black,
+                                      ),
                                     ),
                                     GestureDetector(
-                                      onTap: () {},
+                                      onTap: () {
+                                        pesananQuantitas++;
+                                        print(pesananQuantitas);
+                                      },
                                       child: Text(
                                         '+',
                                         style: TextStyle(
-                                            fontSize: 16.0,
-                                            fontWeight: FontWeight.bold,
-                                            color: Theme.of(context).primaryColor),
+                                          fontSize: 16.0,
+                                          fontWeight: FontWeight.bold,
+                                          color: Theme.of(context).primaryColor,
+                                        ),
                                       ),
                                     ),
                                   ],
@@ -131,7 +222,7 @@ class _CartScreenState extends State<CartScreen> {
                 ),
               ),
             ],
-          )
+          ),
         ],
       ),
     );
