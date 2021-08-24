@@ -80,16 +80,40 @@ class _CartScreenState extends State<CartScreen> {
                                   border: Border.all(color: Colors.grey),
                                 ),
                                 child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                   children: [
-                                    IconButton(
-                                      onPressed: () {},
-                                      icon: Icon(Icons.remove),
+                                    GestureDetector(
+                                      onTap: () {},
+                                      child: Text(
+                                        '-',
+                                        style: TextStyle(
+                                            fontSize: 16.0,
+                                            fontWeight: FontWeight.bold,
+                                            color: Theme.of(context).primaryColor),
+                                      ),
+                                    ),
+                                    Text(
+                                      pesanan.quantitas.toString(),
+                                      style: TextStyle(
+                                          fontSize: 15.0,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.black),
+                                    ),
+                                    GestureDetector(
+                                      onTap: () {},
+                                      child: Text(
+                                        '+',
+                                        style: TextStyle(
+                                            fontSize: 16.0,
+                                            fontWeight: FontWeight.bold,
+                                            color: Theme.of(context).primaryColor),
+                                      ),
                                     ),
                                   ],
                                 ),
                               ),
                               Text(
-                                'Hari',
+                                'Mobil',
                                 style: TextStyle(fontSize: 17.0, fontWeight: FontWeight.bold),
                               )
                             ],
@@ -101,7 +125,7 @@ class _CartScreenState extends State<CartScreen> {
                 ],
               ),
               Text(
-                'Rp.${pesanan.kendaraan.hargaSewa}',
+                'Rp.${pesanan.kendaraan.hargaSewa}K',
                 style: TextStyle(
                   fontSize: 17.0,
                 ),
